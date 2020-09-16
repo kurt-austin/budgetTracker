@@ -1,33 +1,31 @@
+
 const CACHE_NAME = "static-cache-v2";
 const DATA_CACHE_NAME = "data-cache-v1";
+
 const FILES_TO_CACHE = [
   "/",
-  "/index.html",
+  "index.html",
+  "index.js",
   "/manifest.webmanifest",
-  "/assets/css/style.css",
-  "/assets/js/loadImages.js",
-  "/icons/icon-192x192.png",
-  "/icons/icon-512x512.png",
-  "/index.js",
-  "db.js",
-  "api.js"
+  "/styles.css",
+  "/icons/icon-144x144.png"
   
 ];
 
+
+
+
+
 // install
-self.addEventListener("install", function (evt) {
-  // pre cache image data
-  // evt.waitUntil(
-  //   caches.open(DATA_CACHE_NAME).then((cache) => cache.add("/api/transaction"))
-  // );
-    
-  // pre cache all static assets
+self.addEventListener("install", function(evt) {
+  
   evt.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))
+    caches.open(CACHE_NAME).then(cache => {
+      console.log("Your files were pre-cached successfully!");
+      return cache.addAll(FILES_TO_CACHE);
+    })
   );
 
-  // tell the browser to activate this service worker immediately once it
-  // has finished installing
   self.skipWaiting();
 });
 
@@ -51,7 +49,8 @@ self.addEventListener("activate", function(evt) {
 
 // fetch
 self.addEventListener("fetch", function(evt) {
-  if (evt.request.url.includes("/api/")) {
+  const {url} = evt.request;
+  if (url.includes("/api/")) {
     evt.respondWith(
       caches.open(DATA_CACHE_NAME).then(cache => {
         return fetch(evt.request)
@@ -69,9 +68,7 @@ self.addEventListener("fetch", function(evt) {
           });
       }).catch(err => console.log(err))
     );
-
-    return;
-  }
+  } else {
 
   evt.respondWith(
     caches.open(CACHE_NAME).then(cache => {
@@ -80,4 +77,5 @@ self.addEventListener("fetch", function(evt) {
       });
     })
   );
+}
 });
