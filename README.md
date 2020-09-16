@@ -35,8 +35,8 @@
 
   [Github Repository](https://github.com/kurt-austin/budgetTracker)
 
-  [Heroku Repository](https://git.heroku.com/salty-citadel-69634.git)
+  [Heroku Repository](https://git.heroku.com/pacific-cove-73988.git)
 
-  [Budget Tracker Deployed App](https://salty-citadel-69634.herokuapp.com/)
+  [Budget Tracker Deployed App](https://pacific-cove-73988.herokuapp.com/)
 
   [Contact](kurt.austin@gmail.com)
